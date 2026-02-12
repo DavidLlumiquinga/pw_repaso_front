@@ -13,24 +13,24 @@ public class CitaMedicaMapper {
         }
 
         CitaMedicaRepresentation repr = new CitaMedicaRepresentation();
-        repr.setId(cita.getId());
-        repr.setFechaCita(cita.getFechaCita());
-        repr.setHoraCita(cita.getHoraCita());
-        repr.setMotivo(cita.getMotivo());
-        repr.setEstadoCita(cita.getEstadoCita());
+        repr.setId(cita.id);
+        repr.setFechaCita(cita.fechaCita);
+        repr.setHoraCita(cita.horaCita);
+        repr.setMotivo(cita.motivo);
+        repr.setEstadoCita(cita.estadoCita);
 
-        if (cita.getDoctor() != null) {
-            repr.setDoctorId(cita.getDoctor().id);
-            repr.setDoctorNombre(cita.getDoctor().nombre);
-            repr.setDoctorApellido(cita.getDoctor().apellido);
-            repr.setDoctorEspecialidad(cita.getDoctor().especialidad);
+        if (cita.doctor != null) {
+            repr.setDoctorId(cita.doctor.id);
+            repr.setDoctorNombre(cita.doctor.nombre);
+            repr.setDoctorApellido(cita.doctor.apellido);
+            repr.setDoctorEspecialidad(cita.doctor.especialidad);
         }
 
-        if (cita.getPaciente() != null) {
-            repr.setPacienteId(cita.getPaciente().getId());
-            repr.setPacienteNombre(cita.getPaciente().getNombre());
-            repr.setPacienteApellido(cita.getPaciente().getApellido());
-            repr.setPacienteCedula(cita.getPaciente().getCedula());
+        if (cita.paciente != null) {
+            repr.setPacienteId(cita.paciente.id);
+            repr.setPacienteNombre(cita.paciente.nombre);
+            repr.setPacienteApellido(cita.paciente.apellido);
+            repr.setPacienteCedula(cita.paciente.cedula);
         }
 
         return repr;
@@ -42,24 +42,24 @@ public class CitaMedicaMapper {
         }
 
         CitaMedica cita = new CitaMedica();
-        cita.setId(repr.getId());
-        cita.setFechaCita(repr.getFechaCita());
-        cita.setHoraCita(repr.getHoraCita());
-        cita.setMotivo(repr.getMotivo());
-        cita.setEstadoCita(repr.getEstadoCita());
+        cita.id = repr.getId();
+        cita.fechaCita = repr.getFechaCita();
+        cita.horaCita = repr.getHoraCita();
+        cita.motivo = repr.getMotivo();
+        cita.estadoCita = repr.getEstadoCita();
 
         // Crear referencia al doctor (solo con ID)
         if (repr.getDoctorId() != null) {
             Doctor doctor = new Doctor();
             doctor.id = repr.getDoctorId();
-            cita.setDoctor(doctor);
+            cita.doctor = doctor;
         }
 
         // Crear referencia al paciente (solo con ID)
         if (repr.getPacienteId() != null) {
             Paciente paciente = new Paciente();
-            paciente.setId(repr.getPacienteId());
-            cita.setPaciente(paciente);
+            paciente.id = repr.getPacienteId();
+            cita.paciente = paciente;
         }
 
         return cita;

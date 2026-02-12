@@ -29,20 +29,20 @@ public class CitaMedicaService {
     @Transactional
     public CitaMedica crear(CitaMedica citaMedica) {
         // Validar que el doctor existe
-        Doctor doctor = doctorRepository.findById(citaMedica.getDoctor().id);
+        Doctor doctor = doctorRepository.findById(citaMedica.id);
         if (doctor == null) {
-            throw new NotFoundException("Doctor no encontrado con ID: " + citaMedica.getDoctor().id);
+            throw new NotFoundException("Doctor no encontrado con ID: " + citaMedica.id);
         }
 
         // Validar que el paciente existe
-        Paciente paciente = pacienteRepository.findById(citaMedica.getPaciente().id);
+        Paciente paciente = pacienteRepository.findById(citaMedica.id);
         if (paciente == null) {
-            throw new NotFoundException("Paciente no encontrado con ID: " + citaMedica.getPaciente().id);
+            throw new NotFoundException("Paciente no encontrado con ID: " + citaMedica.id);
         }
 
         // Establecer las entidades completas
-        citaMedica.setDoctor(doctor);
-        citaMedica.setPaciente(paciente);
+        citaMedica.doctor = doctor;
+        citaMedica.paciente = paciente;
 
         // El estado CREATED se establece automáticamente en @PrePersist
         citaMedicaRepository.persist(citaMedica);
@@ -99,19 +99,19 @@ public class CitaMedicaService {
         CitaMedica cita = buscarPorId(id);
 
         // Solo actualizar si la cita no está cancelada
-        if (cita.getEstadoCita() == EstadoCita.CANCELLED) {
+        if (cita.estadoCita == EstadoCita.CANCELLED) {
             throw new IllegalStateException("No se puede actualizar una cita cancelada");
         }
 
         // Actualizar campos
-        if (citaActualizada.getFechaCita() != null) {
-            cita.setFechaCita(citaActualizada.getFechaCita());
+        if (citaActualizada.fechaCita != null) {
+            cita.fechaCita = citaActualizada.fechaCita;
         }
-        if (citaActualizada.getHoraCita() != null) {
-            cita.setHoraCita(citaActualizada.getHoraCita());
+        if (citaActualizada.horaCita != null) {
+            cita.horaCita = citaActualizada.horaCita;
         }
-        if (citaActualizada.getMotivo() != null) {
-            cita.setMotivo(citaActualizada.getMotivo());
+        if (citaActualizada.motivo != null) {
+            cita.motivo = citaActualizada.motivo;
         }
 
         return cita;
@@ -121,4 +121,6 @@ public class CitaMedicaService {
     public boolean eliminarFisicamente(Long id) {
         return citaMedicaRepository.deleteById(id);
     }
+
+
 }

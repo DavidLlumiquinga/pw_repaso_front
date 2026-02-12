@@ -25,33 +25,24 @@ public class CitaMedica extends PanacheEntityBase {
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "cita_seq")
-    private Long id;
+    public Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "doctor_id_fk", nullable = false)
-    @NotNull(message = "El doctor es obligatorio")
-    private Doctor doctor;
+    public Doctor doctor;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "paciente_id_fk", nullable = false)
-    @NotNull(message = "El paciente es obligatorio")
-    private Paciente paciente;
+    public Paciente paciente;
 
-    @NotNull(message = "La fecha de la cita es obligatoria")
-    @Column(name = "fecha_cita", nullable = false)
-    private LocalDate fechaCita;
+    public LocalDate fechaCita;
 
-    @NotNull(message = "La hora de la cita es obligatoria")
-    @Column(name = "hora_cita", nullable = false)
-    private LocalTime horaCita;
+    public LocalTime horaCita;
 
-    @Column(length = 500)
-    private String motivo;
+    public String motivo;
 
     @Enumerated(EnumType.STRING)
-    @Column(name = "estado_cita", nullable = false)
-    @NotNull(message = "El estado de la cita es obligatorio")
-    private EstadoCita estadoCita = EstadoCita.CREATED;
+    public EstadoCita estadoCita = EstadoCita.CREATED;
 
     public enum EstadoCita {
         CREATED, // Cita creada
@@ -82,62 +73,5 @@ public class CitaMedica extends PanacheEntityBase {
             throw new IllegalArgumentException("El estado no puede ser nulo");
         }
         this.estadoCita = nuevoEstado;
-    }
-
-    // Getters y Setters
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public Doctor getDoctor() {
-        return doctor;
-    }
-
-    public void setDoctor(Doctor doctor) {
-        this.doctor = doctor;
-    }
-
-    public Paciente getPaciente() {
-        return paciente;
-    }
-
-    public void setPaciente(Paciente paciente) {
-        this.paciente = paciente;
-    }
-
-    public LocalDate getFechaCita() {
-        return fechaCita;
-    }
-
-    public void setFechaCita(LocalDate fechaCita) {
-        this.fechaCita = fechaCita;
-    }
-
-    public LocalTime getHoraCita() {
-        return horaCita;
-    }
-
-    public void setHoraCita(LocalTime horaCita) {
-        this.horaCita = horaCita;
-    }
-
-    public String getMotivo() {
-        return motivo;
-    }
-
-    public void setMotivo(String motivo) {
-        this.motivo = motivo;
-    }
-
-    public EstadoCita getEstadoCita() {
-        return estadoCita;
-    }
-
-    public void setEstadoCita(EstadoCita estadoCita) {
-        this.estadoCita = estadoCita;
     }
 }
